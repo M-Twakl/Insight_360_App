@@ -17,7 +17,7 @@ class SearchCubit extends Cubit<SearchState> {
           'https://newsapi.org/v2/top-headlines',
           queryParameters: {
             'q': query,
-            'apiKey': '6a7cea1520b843238244c252b0539ebc'
+            'apiKey': 'd8a0d007adc448fcb3d02c7441e078cc'
           }
       );
 

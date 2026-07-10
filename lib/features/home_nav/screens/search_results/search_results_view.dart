@@ -11,64 +11,62 @@ class SearchResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: AppColors.whiteColor,
-            title: Text(
-              'Search Results',
-              style: AppTextStyles.kText20Black,
+    return Scaffold(
+            appBar: AppBar(
+              backgroundColor: AppColors.whiteColor,
+              title: Text(
+                'Search Results',
+                style: AppTextStyles.kText20Black,
+              ),
+              centerTitle: true,
+              leading: GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Icon(Icons.arrow_back_ios_new_rounded,
+                    color: AppColors.blackColor),
+              ),
             ),
-            centerTitle: true,
-            leading: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Icon(Icons.arrow_back_ios_new_rounded,
-                  color: AppColors.blackColor),
-            ),
-          ),
-          body: BlocBuilder<SearchCubit, SearchState>(
-            builder: (context, state) {
-              if (state is SearchLoading){
-                return const Center(child: CircularProgressIndicator());
-              }
+            body: BlocBuilder<SearchCubit, SearchState>(
+              builder: (context, state) {
+                if (state is SearchLoading){
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-              if (state is SearchFailure){
-                return Center(child: Text(state.msg));
-              }
+                if (state is SearchFailure){
+                  return Center(child: Text(state.msg));
+                }
 
-              if (state is SearchSuccess) {
-                if (state.model.isEmpty){
-                  return const Center(
-                    child: Text(
-                      'No results found',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
+                if (state is SearchSuccess) {
+                  if (state.model.isEmpty){
+                    return const Center(
+                      child: Text(
+                        'No results found',
+                        style: AppTextStyles.kText18Black,
+                      ),
+                    );
+                  }
+                  return ListView.separated(
+                      padding: const EdgeInsets.all(16),
+                      itemCount: state.model.length,
+                      separatorBuilder: (context, index) => SizedBox(height: 20),
+                      itemBuilder: (context, index) {
+                        final article = state.model[index];
+
+                        return NewsItem(
+                            img: article.urlToImage ??
+                                "https://cdn.pixabay.com/photo/2017/06/26/19/03/news-2444778_1280.jpg",
+                            description: article.description ?? "No Description",
+                            author: article.author?? "Unknown",
+                            publishedAt: article.publishedAt ?? "Unknown Date"
+                        );
+
+                      }
+
+
                   );
                 }
-                return ListView.separated(
-                    padding: const EdgeInsets.all(16),
-                    itemCount: state.model.length,
-                    separatorBuilder: (context, index) => SizedBox(height: 20),
-                    itemBuilder: (context, index) {
-                      final article = state.model[index];
-
-                      return NewsItem(
-                          img: article.urlToImage ??
-                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgV8Qs75tF698K52TZz6Y0SZPHT1zS4etgAGIdm3o0OWL24QBssLbdVyqV&s=10",
-                          description: article.description ?? "No Description",
-                          author: article.author?? "Unknown",
-                          publishedAt: article.publishedAt ?? "Unknown Date"
-                      );
-
-                    }
-
-
-                );
-              }
-              return SizedBox();
-            },
-          )
-      ),
-    );
+                return SizedBox();
+              },
+            )
+        );
   }
 }

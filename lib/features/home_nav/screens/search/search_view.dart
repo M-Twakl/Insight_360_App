@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/features/home_nav/screens/search/search_cubit.dart';
 import '../../../../core/helpers/app_colors.dart';
 import '../search_results/search_results_view.dart';
@@ -42,7 +43,7 @@ class SearchScreen extends StatelessWidget {
                     ),
                     onFieldSubmitted: (value) {
                       if (value.isNotEmpty){
-                        SearchCubit().searchNews(value);
+                        context.read<SearchCubit>().searchNews(value);
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => const SearchResultsScreen(),

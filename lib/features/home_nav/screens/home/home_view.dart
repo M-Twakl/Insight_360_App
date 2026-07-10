@@ -13,10 +13,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-      HomeCubit()..getHomeArticles(),
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: AppColors.whiteColor,
         appBar: AppBar(
           backgroundColor: AppColors.whiteColor,
@@ -79,8 +76,8 @@ class HomeScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
-                            image: NetworkImage(state.model[0].urlToImage??"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgV8Qs75tF698K52TZz6Y0SZPHT1zS4etgAGIdm3o0OWL24QBssLbdVyqV&s=10"),
-                            fit: BoxFit.cover,
+                            image: NetworkImage(state.model[0].urlToImage ?? "https://cdn.pixabay.com/photo/2017/06/26/19/03/news-2444778_1280.jpg"
+                            )
                           ),
                         ),
                       ),
@@ -130,7 +127,7 @@ class HomeScreen extends StatelessWidget {
                                       DetailsScreen(model: state.model[index+1]),)
                                 ),
                                 child: NewsItem(
-                                  img: state.model[index+1].urlToImage??"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgV8Qs75tF698K52TZz6Y0SZPHT1zS4etgAGIdm3o0OWL24QBssLbdVyqV&s=10",
+                                  img: state.model[index+1].urlToImage??"https://cdn.pixabay.com/photo/2017/06/26/19/03/news-2444778_1280.jpg",
                                   author: state.model[index+1].author??"Generated",
                                   description: state.model[index+1].description??"Generated",
                                   publishedAt: state.model[index+1].publishedAt??"UnKnown Date",
@@ -147,7 +144,6 @@ class HomeScreen extends StatelessWidget {
               },
             ),
         ),
-      ),
-    );
+      );
   }
 }
